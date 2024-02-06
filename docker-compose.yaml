@@ -1,0 +1,55 @@
+version: '3'
+services:
+  main:
+      container_name: main
+      build: .
+      ports:
+         - 5000:80
+         - 5001:5001
+      depends_on:
+        - elasticsearch
+        - kibana
+      networks:
+        - elastic
+      environment:
+        ElasticSearch__Url: http://elasticsearch:9200/
+  elasticsearch:
+    image: "docker.elastic.co/elasticsearch/elasticsearch:7.15.1"
+    container_name: elasticsearch
+    environment:
+      - cluster.name=elasticsearch-cluster
+      - discovery.type=single-node
+    ports:
+      - 9200:9200
+    networks:
+      - elastic
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.15.1
+    container_name: kibana
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+      #ELASTICSEARCH_URL: http://elasticsearch:9200
+    networks:
+      - elastic
+    depends_on:
+      - elasticsearch
+
+
+networks:
+  elastic:
+    driver: bridge
+  #main:
+  #    container_name: main
+  #    build: .
+  #    # dockerfile: src/WebUI/DockerFile
+  #    # volumes:
+  #    #     - ./src:/app/src
+  #    #environment: 
+  #    ports:
+  #        - 5000:80
+  #        - 5001:5001
+  #    # command: dotnet run
+  #    depends_on:
+  #      - logstash
