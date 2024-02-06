@@ -26,7 +26,7 @@ namespace elastic_search_api.Infrastructure.Persistence
                 .BasicAuthentication(userame,password)
                 .DisableDirectStreaming()
                 .DefaultIndex(documentIndex)
-                .DefaultMappingFor<DocumentES>(i => i.IndexName(documentIndex).IdProperty(f => f.Id).)
+                .DefaultMappingFor<DocumentES>(i => i.IndexName(documentIndex).IdProperty(f => f.Id))
                 // This is going to enable us to see the raw queries sent to elastic when debugging
                 .EnableDebugMode();
                 //.OnRequestDataCreated(callDetails =>
