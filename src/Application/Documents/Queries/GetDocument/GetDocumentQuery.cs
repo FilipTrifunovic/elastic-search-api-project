@@ -15,7 +15,7 @@ namespace elastic_search_api.Application.Documents.Queries.GetDocument
     public class GetDocumentQuery : MediatR.IRequest<List<DocumentDto>>
     {
         public string Name { get; set; }
-        public string Type { get; set; }
+        public List<string> Type { get; set; }
         public string Content { get; set; }
         public int PageSize { get; set; } = 10;
         public int PageNumber { get; set; } = 1;
@@ -43,9 +43,6 @@ namespace elastic_search_api.Application.Documents.Queries.GetDocument
                     Must = GetNameQuery(request.Name),
                     Should = GetContentQuery(request.Content),
                 },
-                Sort = new List<ISort> {
-                    new FieldSort { Field = "name", Order = SortOrder.Ascending }
-                },
                 From = (request.PageNumber - 1) * request.PageSize,
                 Size = request.PageSize,
             };
@@ -58,6 +55,7 @@ namespace elastic_search_api.Application.Documents.Queries.GetDocument
                 Content = x.Source.Content,
                 Name = x.Source.Name,
                 Type = x.Source.Type,
+                Score = x.Score
             }).ToList();
         }
 
@@ -68,10 +66,10 @@ namespace elastic_search_api.Application.Documents.Queries.GetDocument
                 new MatchQuery
                 {
                     Query = content,
-                    Operator = Operator.And,
+                    Operator = Operator.Or,
                     Fuzziness = Fuzziness.Auto,
                     Field = "content",
-                    Boost = 1.3
+                    Boost = 1.1
                 }
             };
         }
@@ -88,14 +86,14 @@ namespace elastic_search_api.Application.Documents.Queries.GetDocument
             };
         }
 
-        private List<QueryContainer> GetFilter(string type)
+        private List<QueryContainer> GetFilter(List<string> type)
         {
             return new List<QueryContainer>
             {
-                new TermQuery
+                new TermsQuery
                 {
                     Field = "type",
-                    Value = type
+                    Terms = type
                 }
             };
         }

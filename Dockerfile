@@ -7,10 +7,6 @@ COPY src/WebUI/*.csproj ./src/WebUI/
 COPY src/Domain/*.csproj ./src/Domain/
 COPY src/Application/*.csproj ./src/Application/
 COPY src/Infrastructure/*.csproj ./src/Infrastructure/ 
-
-COPY tests/Application.UnitTests/*.csproj ./tests/Application.UnitTests/
-COPY tests/Application.IntegrationTests/*.csproj ./tests/Application.IntegrationTests/
-COPY tests/Domain.UnitTests/*.csproj ./tests/Domain.UnitTests/
 #
 RUN dotnet restore 
 #

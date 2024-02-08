@@ -40,10 +40,11 @@ namespace elastic_search_api.Infrastructure.Persistence
             var client = new ElasticClient(settings);
             services.AddSingleton<IElasticClient>(client);
 
-            if ((client.Indices.Exists(documentIndex)).Exists)
-               client.Indices.Delete(documentIndex);
+            services.AddHostedService<ElasticsearchHostedService>();
+            //if ((client.Indices.Exists(documentIndex)).Exists)
+            //   client.Indices.Delete(documentIndex);
 
-            var indexResponse = client.AddDocumentIndex(documentIndex);
+            //var indexResponse = client.AddDocumentIndex(documentIndex);
         }
     }
 }

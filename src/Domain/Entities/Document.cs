@@ -1,11 +1,8 @@
-﻿using elastic_search_api.Domain.Common;
-using System.Collections.Generic;
-
-
-namespace elastic_search_api.Domain.Entities
+﻿namespace elastic_search_api.Domain.Entities
 {
-    public class Document : AuditableEntity
+    public class Document
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
         public string Content { get; set; }

@@ -32,6 +32,7 @@ namespace elastic_search_api.Application.Documents.Commands.DeleteDocument
             {
                 throw new NotFoundException("Document not found");
             }
+
             return Unit.Value;
         }
     }

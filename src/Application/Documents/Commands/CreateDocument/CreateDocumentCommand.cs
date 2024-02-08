@@ -1,10 +1,6 @@
 ﻿using elastic_search_api.Application.EntityMapping;
 using MediatR;
 using Nest;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,13 +24,15 @@ namespace elastic_search_api.Application.Documents.Commands.CreateDocument
         }
         public async Task<Unit> Handle(CreateDocumentCommand request, CancellationToken cancellationToken)
         {
-            var indexResponse =await _elasticClient.IndexAsync(new DocumentES
+            var indexResponse = await _elasticClient.IndexAsync(new DocumentES
             {
                 Content = request.Content,
                 Name = request.Name,
-                Type = request.Type,
-                CreatedAt = DateTime.Now
-            },i=>i.Id(request.Id));
+                Type = request.Type
+            },
+            i => i.Id(request.Id)
+            );
+
             return Unit.Value;
         }
     }

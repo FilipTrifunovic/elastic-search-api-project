@@ -24,14 +24,9 @@ namespace elastic_search_api.WebUI.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut()]
         public async Task<ActionResult> Update(string id, UpdateDocumentCommand command)
         {
-            if (id != command.Id)
-            {
-                return BadRequest();
-            }
-
             await Mediator.Send(command);
 
             return NoContent();

@@ -1,13 +1,8 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace elastic_search_api.Application.Documents.Commands.CreateDocument
 {
-    internal class CreateDocumentCommandValidator : AbstractValidator<CreateDocumentCommand>
+    public class CreateDocumentCommandValidator : AbstractValidator<CreateDocumentCommand>
     {
         public CreateDocumentCommandValidator()
         {
@@ -21,11 +16,11 @@ namespace elastic_search_api.Application.Documents.Commands.CreateDocument
 
             RuleFor(v => v.Type)
                 .NotEmpty()
-                .WithMessage("Document Content can't be empty");
+                .WithMessage("Document Type can't be empty");
 
             RuleFor(v => v.Name)
                 .NotEmpty()
-                .WithMessage("Document Content can't be empty");
+                .WithMessage("Document Name can't be empty");
         }
     }
 }
